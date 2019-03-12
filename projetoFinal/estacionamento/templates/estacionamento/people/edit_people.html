@@ -1,0 +1,9 @@
+{% extends 'estacionamento/index.html' %}
+{% block main %}
+  <h1>Nova Pessoa</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" name="button">Salvar</button>
+  </form>
+{% endblock %}

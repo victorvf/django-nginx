@@ -1,0 +1,10 @@
+{% extends 'estacionamento/index.html' %}
+{% block main %}
+<h1>Lista de Pessoas</h1>
+  <ul>
+    <!-- para o nome da variavel aqui dentro em nome da variavel que vem -->
+    {% for people in peoples %}
+    <li><a href="{% url 'detail_people' people.id %}">{{people.name}}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

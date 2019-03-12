@@ -1,0 +1,10 @@
+{% extends 'estacionamento/index.html' %}
+{% block main %}
+<h1>Lista de Veículos</h1>
+  <ul>
+    <!-- para o nome da variavel aqui dentro em nome da variavel que vem -->
+    {% for vehicle in vehicles %}
+    <li><a href="{% url 'detail_vehicle' vehicle.id %}">{{vehicle.owner}} - {{vehicle.board}}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'estacionamento/index.html' %}
+{% block main %}
+<h1>Lista de Mensalistas</h1>
+  <ul>
+    <!-- para o nome da variavel aqui dentro em nome da variavel que vem -->
+    {% for month in monthly %}
+    <li><a href="{% url 'detail_monthly' month.id %}">{{month.vehicle}} - {{month.input}}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

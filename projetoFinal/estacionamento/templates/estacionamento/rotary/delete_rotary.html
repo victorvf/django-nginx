@@ -1,0 +1,11 @@
+{% extends 'estacionamento/index.html' %}
+{% block main%}
+  <form method="post">
+    {% csrf_token %}
+    Você tem certeza que quer excluir o Rotativo: <b>{{ rotary.vehicle }}</b>? <br><br>
+    <button type="button">
+      <a href="{% url 'list_rotary' %}">Cancelar</a>
+    </button>
+    <button>Deletar</button>
+  </form>
+{% endblock %}

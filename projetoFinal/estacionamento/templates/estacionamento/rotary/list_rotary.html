@@ -1,0 +1,10 @@
+{% extends 'estacionamento/index.html' %}
+{% block main %}
+<h1>Lista de Rotativos</h1>
+  <ul>
+    <!-- para o nome da variavel aqui dentro em nome da variavel que vem -->
+    {% for rotary in rotaries %}
+    <li><a href="{% url 'detail_rotary' rotary.id %}">{{rotary.vehicle}} - {{rotary.input}}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

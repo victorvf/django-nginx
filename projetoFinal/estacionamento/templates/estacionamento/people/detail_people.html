@@ -1,0 +1,7 @@
+{% extends 'estacionamento/index.html' %}
+{% block main %}
+  <p>{{people.name}}</p>
+  <p>{{people.address}}</p>
+  <p>{{people.telephone}}</p>
+  <a href="{% url 'delete_people' people.id %}">Deletar</a>
+{% endblock %}
