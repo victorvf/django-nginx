@@ -74,19 +74,22 @@ WSGI_APPLICATION = 'finalproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+#caso eu não queira ligar o banco de dados externo
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': os.path.join(BASE_DIR, 'estudoDjango.sqlite3'),
 #     }
 # }
+
+#coloquei a senha no db externo
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
         'HOST': 'db',
-        'PASSWORD': 'testando',
+        'PASSWORD': 'admin',
         'PORT': 5432,
     }
 }
