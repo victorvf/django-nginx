@@ -13,7 +13,7 @@ Foi desenvolvida uma aplicação simples para Estacionamento, com ênfase no est
 
 ### Passos:
 
-para mais informações sobre os passos 1 a 6, acesse: [Docker](https://docs.docker.com/compose/django/)
+para mais informações sobre os passos 1 a 6, acesse: [Docker](https://docs.docker.com/compose/django/) ou entre em contato comigo pelo [Twitter](https://twitter.com/victorfontenele)
 
 *1. Criar os arquivos Dockerfile, requirements.txt, docker-compose.yml*
 
