@@ -1,10 +1,31 @@
 {% extends 'estacionamento/index.html' %}
 {% block main %}
 <h1>Lista de Mensalistas</h1>
-  <ul>
-    <!-- para o nome da variavel aqui dentro em nome da variavel que vem -->
+  <table class="table table-borderless">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Entrada</th>
+      <th scope="col">Saida</th>
+      <th scope="col">Pago</th>
+      <th scope="col">Veiculo</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody class="text-uppercase">
     {% for month in monthly %}
-    <li><a href="{% url 'detail_monthly' month.id %}">{{month.vehicle}} - {{month.input}}</a></li>
+      <tr>
+        <th scope="row"><a href="{% url 'detail_monthly' monthly.id %}">{{monthly.id}}</a></th>
+        <td>{{monthly.input}}</td>
+        <td>{{monthly.output}}</td>
+        <td>{{monthly.paid}}</td>
+        <td>{{monthly.vehicle}}</td>
+        <td>{{monthly.total_month}}</td>
+      </tr>
     {% endfor %}
-  </ul>
+  </tbody>
+  </table>
+  <button type="button" class="btn btn-primary">
+    <a href="{% url 'new_monthly' %}" style="color:white">Novo</a>
+  </button>
 {% endblock %}

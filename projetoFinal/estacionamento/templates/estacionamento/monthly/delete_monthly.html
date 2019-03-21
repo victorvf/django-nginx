@@ -3,9 +3,9 @@
   <form method="post">
     {% csrf_token %}
     Você tem certeza que quer excluir o Rotativo: <b>{{ month.vehicle }}</b>? <br><br>
-    <button type="button" >
+    <button type="button" class="btn btn-danger">
       <a href="{% url 'list_monthly' %}">Cancelar</a>
     </button>
-    <button>Deletar</button>
+    <button class="btn btn-success">Deletar</button>
   </form>
 {% endblock %}

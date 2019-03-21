@@ -1,5 +1,8 @@
-<h2>Tem certeza que quer deletar essa {{people.name}}</h2>
-<form action="{% url 'delete_people' people.id %}" method="POST">
-  {% csrf_token %}
-  <button type="submit" name="button">Deletar</button>
-</form>
+{% extends 'estacionamento/index.html' %}
+{% block main %}
+  <h2>Tem certeza que quer deletar esse(a) {{people.name}}</h2>
+  <form action="{% url 'delete_people' people.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" name="button" class="btn btn-danger">Deletar</button>
+  </form>
+{% endblock %}

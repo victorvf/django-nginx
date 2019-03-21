@@ -3,4 +3,5 @@
   <p>{{vehicle.owner}}</p>
   <p>{{vehicle.board}}</p>
   <p>{{vehicle.note}}</p>
+  <a href="{% url 'delete_vehicle' vehicle.id %}" class="btn btn-danger">Deletar</a>
 {% endblock %}

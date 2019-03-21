@@ -1,10 +1,31 @@
 {% extends 'estacionamento/index.html' %}
 {% block main %}
 <h1>Lista de Veículos</h1>
-  <ul>
-    <!-- para o nome da variavel aqui dentro em nome da variavel que vem -->
+  <table class="table table-borderless">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Placa</th>
+      <th scope="col">Cor</th>
+      <th scope="col">Observação</th>
+      <th scope="col">Marca</th>
+      <th scope="col">Proprietário</th>
+    </tr>
+  </thead>
+  <tbody class="text-uppercase">
     {% for vehicle in vehicles %}
-    <li><a href="{% url 'detail_vehicle' vehicle.id %}">{{vehicle.owner}} - {{vehicle.board}}</a></li>
+      <tr>
+        <th scope="row"><a href="{% url 'detail_vehicle' vehicle.id %}">{{vehicle.id}}</a></th>
+        <td>{{vehicle.board}}</td>
+        <td>{{vehicle.color}}</td>
+        <td>{{vehicle.note}}</td>
+        <td>{{vehicle.brand}}</td>
+        <td>{{vehicle.owner}}</td>
+      </tr>
     {% endfor %}
-  </ul>
+  </tbody>
+  </table>
+  <button type="button" class="btn btn-primary">
+    <a href="{% url 'new_vehicle' %}" style="color:white">Novo</a>
+  </button>
 {% endblock %}

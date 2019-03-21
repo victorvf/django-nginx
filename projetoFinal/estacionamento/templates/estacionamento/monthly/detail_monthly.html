@@ -5,4 +5,5 @@
   <p>{{monthly.paid}}</p>
   <p>{{monthly.vehicle}}</p>
   <p>{{monthly.total_month}}</p>
+  <a href="{% url 'delete_monthly' monthly.id %}" class="btn btn-danger">Deletar</a>
 {% endblock %}
