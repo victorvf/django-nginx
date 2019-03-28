@@ -11,7 +11,7 @@ urlpatterns = [
     path('pessoas/<int:id>/', views.detail_people, name='detail_people'),
     path('pessoas/<int:id>/edit/', views.update_people, name='update_people'),
     path('pessoas/<int:id>/delete/', views.delete_people, name='delete_people'),
-
+    path('relatorio/<str:model>/', views.Pdf.as_view(), name='relatorio_people'),
 
     ########### END-PEOPLE ############
 

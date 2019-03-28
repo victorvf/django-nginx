@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+{% load bootstrap %}
+
+{% block main %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+<div class="card card-login mx-auto mt-5">
+  <div class="card-header">Login</div>
+  <div class="card-body">
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+
+      {{form|bootstrap}}
+
+      <input class="btn btn-success" type="submit" value="login">
+      <input type="hidden" name="next" value="{{ next }}">
+    </form>
+    <div class="text-center">
+      <a class="d-block small" href="{% url 'password_reset' %}">Lost password?</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

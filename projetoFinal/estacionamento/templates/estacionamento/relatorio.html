@@ -1,0 +1,85 @@
+{% if model == 'people' %}
+  <h1 class="test">Relatorio de Pessoas</h1>
+  <table>
+    <tr>
+      <td>Id</td>
+      <td>Nome</td>
+      <td>Telefone</td>
+      <td>Endereço</td>
+    </tr>
+
+    {% for people in objetos %}
+        <tr>
+          <td>{{ people.id }}</td>
+          <td>{{ people.name }}</td>
+          <td>{{ people.telephone }}</td>
+          <td>{{ people.address }}</td>
+        </tr>
+    {% endfor %}
+  </table>
+{% elif model == 'vehicle' %}
+  <h1 class="test">Relatorio de Vehicle</h1>
+  <table>
+    <tr>
+      <td>Id</td>
+      <td>Placa</td>
+      <td>Cor</td>
+      <td>Marca</td>
+      <td>Proprietario</td>
+      <td>Observação</td>
+    </tr>
+
+    {% for vehicle in objetos %}
+        <tr>
+          <td>{{ vehicle.id }}</td>
+          <td>{{ vehicle.board }}</td>
+          <td>{{ vehicle.color }}</td>
+          <td>{{ vehicle.brand }}</td>
+          <td>{{ vehicle.owner }}</td>
+          <td>{{ vehicle.note }}</td>
+        </tr>
+    {% endfor %}
+  </table>
+{% elif model == 'monthly' %}
+  <h1 class="test">Relatorio de Mensalistas</h1>
+  <table>
+    <tr>
+      <td>Id</td>
+      <td>Entrada</td>
+      <td>Saida</td>
+      <td>Pago</td>
+      <td>Veiculo</td>
+    </tr>
+
+    {% for month in objetos %}
+        <tr>
+          <td>{{ month.id }}</td>
+          <td>{{ month.input }}</td>
+          <td>{{ month.output }}</td>
+          <td>{{ month.paid }}</td>
+          <td>{{ month.vehicle }}</td>
+        </tr>
+    {% endfor %}
+  </table>
+{% elif model == 'rotary' %}
+  <h1 class="test">Relatorio de Rotativos</h1>
+  <table>
+    <tr>
+      <td>Id</td>
+      <td>Entrada</td>
+      <td>Saida</td>
+      <td>Pago</td>
+      <td>Veiculo</td>
+    </tr>
+
+    {% for rotary in objetos %}
+        <tr>
+          <td>{{ rotary.id }}</td>
+          <td>{{ rotary.input }}</td>
+          <td>{{ rotary.output }}</td>
+          <td>{{ rotary.paid }}</td>
+          <td>{{ rotary.vehicle }}</td>
+        </tr>
+    {% endfor %}
+  </table>
+{% endif %}

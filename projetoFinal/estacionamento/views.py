@@ -1,24 +1,71 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django.utils import timezone
 from . import models
 from . import forms
 
+########### PDF #################
+from django.http import HttpResponse
+from django.template.loader import get_template
+import xhtml2pdf.pisa as pisa
+import io
+from django.views import View
+
+class Render:
+    @staticmethod
+    def render(path: str, params: dict, filename: str):
+        template = get_template(path)
+        html = template.render(params)
+        response = io.BytesIO()
+        pdf = pisa.pisaDocument(
+            io.BytesIO(html.encode("UTF-8")), response)
+        if not pdf.err:
+            response = HttpResponse(
+                response.getvalue(), content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment;filename=%s.pdf' % filename
+            return response
+        else:
+            return HttpResponse("Error Rendering PDF", status=400)
+
+class Pdf(View):
+
+    def get(self, request, model):
+        if model == 'people':
+            objetos = models.People.objects.all()
+        elif model == 'vehicle':
+            objetos = models.Vehicle.objects.all()
+        elif model == 'monthly':
+            objetos = models.Monthly.objects.all()
+        else:
+            objetos = models.Rotary.objects.all()
+
+        params = {
+            'request': request,
+            'objetos': objetos,
+            'model': model,
+        }
+        return Render.render('estacionamento/relatorio.html', params, 'relatorio')
+########### END-PDF #################
+
+@login_required #login_required não precisa ser colocado pra quem utilizar o as_view() na urls.py
 def home(request):
     context = {'mensagem':'Olaa mundo'}
     return render(request, 'estacionamento/index.html', {'context':context})
 
 ########### PEOPLE #################
-
+@login_required
 def list_peoples(request):
     peoples = models.People.objects.all().order_by('id')
     return render(request, 'estacionamento/people/list_people.html', {'peoples':peoples})
 
+@login_required
 def detail_people(request, id):
     people = get_object_or_404(models.People, id=id)
     return render(request, 'estacionamento/people/detail_people.html', {'people':people})
 
+@login_required
 def new_people(request):
     if request.method == "POST":
         form_people = forms.PeopleForm(request.POST)
@@ -30,6 +77,7 @@ def new_people(request):
         form_people = forms.PeopleForm()
     return render(request, 'estacionamento/people/edit_people.html', {'form':form_people})
 
+@login_required
 def update_people(request, id):
     people = get_object_or_404(models.People, id=id)
     if request.method == 'POST':
@@ -42,6 +90,7 @@ def update_people(request, id):
         form_people = forms.PeopleForm(instance=people)
     return render(request, 'estacionamento/people/edit_people.html', {'form':form_people})
 
+@login_required
 def delete_people(request, id):
     people = get_object_or_404(models.People, id=id)
     if request.method == 'POST':
@@ -53,15 +102,17 @@ def delete_people(request, id):
 ########### END-PEOPLE #################
 
 ########### ROTARY ####################
-
+@login_required
 def list_rotary(request):
     rotaries = models.Rotary.objects.all().order_by('id')
     return render(request, 'estacionamento/rotary/list_rotary.html', {'rotaries':rotaries})
 
+@login_required
 def detail_rotary(request, id):
     rotary = get_object_or_404(models.Rotary, id=id)
     return render(request, 'estacionamento/rotary/detail_rotary.html', {'rotary':rotary})
 
+@login_required
 def new_rotary(request):
     if request.method == 'POST':
         form_rotary = forms.RotaryForm(request.POST)
@@ -73,6 +124,7 @@ def new_rotary(request):
         form_rotary = forms.RotaryForm()
     return render(request, 'estacionamento/rotary/edit_rotary.html', {'form':form_rotary})
 
+@login_required
 def update_rotary(request, id):
     rotary = get_object_or_404(models.Rotary, id=id)
     if request.method == 'POST':
@@ -90,18 +142,21 @@ class delete_rotary(DeleteView):
     model = models.Rotary
     context_object_name = 'rotary'
     success_url = reverse_lazy('list_rotary')
+
 ########### END-ROTARY ####################
 
 ########### VEHICLE ####################
-
+@login_required
 def list_vehicle(request):
     vehicles=models.Vehicle.objects.all().order_by('id')
     return render(request, 'estacionamento/vehicle/list_vehicle.html', {'vehicles':vehicles})
 
+@login_required
 def detail_vehicle(request, id):
     vehicle = get_object_or_404(models.Vehicle, id=id)
     return render(request, 'estacionamento/vehicle/detail_vehicle.html', {'vehicle':vehicle})
 
+@login_required
 def new_vehicle(request):
     if request.method == 'POST':
         form_vehicle = forms.VehicleForm(request.POST)
@@ -113,6 +168,7 @@ def new_vehicle(request):
         form_vehicle = forms.VehicleForm()
     return render(request, 'estacionamento/vehicle/edit_vehicle.html', {'form':form_vehicle})
 
+@login_required
 def update_vehicle(request, id):
     vehicle = get_object_or_404(models.Vehicle, id=id)
     if request.method == 'POST':
@@ -134,15 +190,17 @@ class delete_vehicle(DeleteView):
 ########### END-VEHICLE ####################
 
 ########### MONTHLY ####################
-
+@login_required
 def list_monthly(request):
     monthly = models.Monthly.objects.all().order_by('id')
     return render(request, 'estacionamento/monthly/list_monthly.html', {'monthly':monthly})
 
+@login_required
 def detail_monthly(request, id):
     monthly = get_object_or_404(models.Monthly, id=id)
     return render(request, 'estacionamento/monthly/detail_monthly.html', {'monthly':monthly})
 
+@login_required
 def new_monthly(request):
     if request.method == 'POST':
         form_monthly = forms.MonthlyForm(request.POST)
@@ -154,6 +212,7 @@ def new_monthly(request):
         form_monthly = forms.MonthlyForm()
     return render(request, 'estacionamento/monthly/edit_monthly.html', {'form':form_monthly})
 
+@login_required
 def update_monthly(request, id):
     monthly = get_object_or_404(models.Monthly, id=id)
     if request.method == 'POST':
