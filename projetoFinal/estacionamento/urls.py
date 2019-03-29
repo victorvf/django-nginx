@@ -17,31 +17,31 @@ urlpatterns = [
 
     ############# ROTARY ##############
 
-    path('rotativos', views.list_rotary, name='list_rotary'),
-    path('rotativos/new/', views.new_rotary, name='new_rotary'),
-    path('rotativos/<int:id>/', views.detail_rotary, name='detail_rotary'),
-    path('rotativos/<int:id>/edit/', views.update_rotary, name='update_rotary'),
-    path('rotativos/<pk>/delete/', views.delete_rotary.as_view(), name='delete_rotary'),
+    path('rotativos/', views.ListRotary.as_view(), name='list_rotary'),
+    path('rotativos/new/', views.CreateRotary.as_view(), name='new_rotary'),
+    path('rotativos/<pk>/', views.DetailRotary.as_view(), name='detail_rotary'),
+    path('rotativos/<pk>/edit/', views.UpdateRotary.as_view(), name='update_rotary'),
+    path('rotativos/<pk>/delete/', views.DeleteRotary.as_view(), name='delete_rotary'),
 
     ############# END-ROTARY ##############
 
     ############# VEHICLE ##############
 
-    path('veiculos', views.list_vehicle, name='list_vehicle'),
-    path('veiculos/new/', views.new_vehicle, name='new_vehicle'),
-    path('veiculos/<int:id>/', views.detail_vehicle, name='detail_vehicle'),
-    path('veiculos/<int:id>/edit/', views.update_vehicle, name='update_vehicle'),
-    path('veiculos/<pk>/delete/', views.delete_vehicle.as_view(), name='delete_vehicle'),
+    path('veiculos/', views.ListVehicle.as_view(), name='list_vehicle'),
+    path('veiculos/new/', views.CreateVehicle.as_view(), name='new_vehicle'),
+    path('veiculos/<pk>/', views.DetailVehicle.as_view(), name='detail_vehicle'),
+    path('veiculos/<pk>/edit/', views.UpdateVehicle.as_view(), name='update_vehicle'),
+    path('veiculos/<pk>/delete/', views.DeleteVehicle.as_view(), name='delete_vehicle'),
 
     ############# END-VEHICLE ##############
 
     ############# MONTHLY ##############
 
-    path('mensalistas', views.list_monthly, name='list_monthly'),
-    path('mensalistas/new/', views.new_monthly, name='new_monthly'),
-    path('mensalistas/<int:id>/', views.detail_monthly, name='detail_monthly'),
-    path('mensalistas/<int:id>/edit/', views.update_monthly, name='update_monthly'),
-    path('mensalistas/<pk>/delete/', views.delete_monthly.as_view(), name='delete_monthly'),
+    path('mensalistas/', views.ListMonthly.as_view(), name='list_monthly'),
+    path('mensalistas/new/', views.CreateMonthly.as_view(), name='new_monthly'),
+    path('mensalistas/<pk>/', views.DetailMonthly.as_view(), name='detail_monthly'),
+    path('mensalistas/<pk>/edit/', views.UpdateMonthly.as_view(), name='update_monthly'),
+    path('mensalistas/<pk>/delete/', views.DeleteMonthly.as_view(), name='delete_monthly'),
 
     ############# END-MONTHLY ##############
 ]

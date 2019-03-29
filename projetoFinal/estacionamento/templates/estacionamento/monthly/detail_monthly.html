@@ -1,9 +1,10 @@
 {% extends 'estacionamento/index.html' %}
 {% block main %}
-  <p>{{monthly.input}}</p>
-  <p>{{monthly.output}}</p>
-  <p>{{monthly.paid}}</p>
-  <p>{{monthly.vehicle}}</p>
-  <p>{{monthly.total_month}}</p>
-  <a href="{% url 'delete_monthly' monthly.id %}" class="btn btn-danger">Deletar</a>
+  <p>{{month.input}}</p>
+  <p>{{month.output}}</p>
+  <p>{{month.paid}}</p>
+  <p>{{month.vehicle}}</p>
+  <p>{{month.total_month}}</p>
+  <a href="{% url 'update_monthly' month.id %}" class="btn btn-success">Atualizar</a>
+  <a href="{% url 'delete_monthly' month.id %}" class="btn btn-danger">Deletar</a>
 {% endblock %}

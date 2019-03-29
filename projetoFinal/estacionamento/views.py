@@ -1,6 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import DeleteView
+
+############## CLASS-BASED ##################
+
+from django.views.generic.edit import DeleteView, CreateView, UpdateView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+
+############### END CLASS-BASED ################
+
 from django.urls import reverse_lazy
 from django.utils import timezone
 from . import models
@@ -102,42 +110,31 @@ def delete_people(request, id):
 ########### END-PEOPLE #################
 
 ########### ROTARY ####################
-@login_required
-def list_rotary(request):
-    rotaries = models.Rotary.objects.all().order_by('id')
-    return render(request, 'estacionamento/rotary/list_rotary.html', {'rotaries':rotaries})
 
-@login_required
-def detail_rotary(request, id):
-    rotary = get_object_or_404(models.Rotary, id=id)
-    return render(request, 'estacionamento/rotary/detail_rotary.html', {'rotary':rotary})
+class ListRotary(ListView):
+    model = models.Rotary
+    template_name = 'estacionamento/rotary/list_rotary.html'
+    context_object_name = 'rotaries'
 
-@login_required
-def new_rotary(request):
-    if request.method == 'POST':
-        form_rotary = forms.RotaryForm(request.POST)
-        if form_rotary.is_valid():
-            rotary = form_rotary.save(commit=False)
-            rotary.save()
-            return redirect('detail_rotary', id=rotary.id)
-    else:
-        form_rotary = forms.RotaryForm()
-    return render(request, 'estacionamento/rotary/edit_rotary.html', {'form':form_rotary})
+class DetailRotary(DetailView):
+    model = models.Rotary
+    template_name = 'estacionamento/rotary/detail_rotary.html'
+    context_object_name = 'rotary'
 
-@login_required
-def update_rotary(request, id):
-    rotary = get_object_or_404(models.Rotary, id=id)
-    if request.method == 'POST':
-        form_rotary = forms.RotaryForm(request.POST, instance=rotary)
-        if form_rotary.is_valid():
-            f_rotary = form_rotary.save(commit=False)
-            f_rotary.save()
-            return redirect('detail_rotary', id=f_rotary.id)
-    else:
-        form_rotary = forms.RotaryForm(instance=rotary)
-    return render(request,'estacionamento/rotary/edit_rotary.html', {'form':form_rotary})
+class CreateRotary(CreateView):
+    model = models.Rotary
+    template_name = 'estacionamento/rotary/edit_rotary.html'
+    fields = ['input','output','paid','vehicle']
+    success_url = '/rotativos/'
 
-class delete_rotary(DeleteView):
+class UpdateRotary(UpdateView):
+    model = models.Rotary
+    template_name = 'estacionamento/rotary/edit_rotary.html'
+    fields = ['input','output','paid','vehicle']
+    context_object_name = 'update'
+    success_url = '/rotativos/{id}/'
+
+class DeleteRotary(DeleteView):
     template_name = 'estacionamento/rotary/delete_rotary.html'
     model = models.Rotary
     context_object_name = 'rotary'
@@ -146,42 +143,30 @@ class delete_rotary(DeleteView):
 ########### END-ROTARY ####################
 
 ########### VEHICLE ####################
-@login_required
-def list_vehicle(request):
-    vehicles=models.Vehicle.objects.all().order_by('id')
-    return render(request, 'estacionamento/vehicle/list_vehicle.html', {'vehicles':vehicles})
+class ListVehicle(ListView):
+    model = models.Vehicle
+    template_name = 'estacionamento/vehicle/list_vehicle.html'
+    context_object_name = 'vehicles'
 
-@login_required
-def detail_vehicle(request, id):
-    vehicle = get_object_or_404(models.Vehicle, id=id)
-    return render(request, 'estacionamento/vehicle/detail_vehicle.html', {'vehicle':vehicle})
+class DetailVehicle(DetailView):
+    model = models.Vehicle
+    template_name = 'estacionamento/vehicle/detail_vehicle.html'
+    context_object_name = 'vehicle'
 
-@login_required
-def new_vehicle(request):
-    if request.method == 'POST':
-        form_vehicle = forms.VehicleForm(request.POST)
-        if form_vehicle.is_valid():
-            vehicle = form_vehicle.save(commit=False)
-            vehicle.save()
-            return redirect('detail_vehicle', id=vehicle.id)
-    else:
-        form_vehicle = forms.VehicleForm()
-    return render(request, 'estacionamento/vehicle/edit_vehicle.html', {'form':form_vehicle})
+class CreateVehicle(CreateView):
+    model = models.Vehicle
+    template_name = 'estacionamento/vehicle/edit_vehicle.html'
+    fields = ['board','color','note','brand','owner']
+    success_url = '/veiculos/'
 
-@login_required
-def update_vehicle(request, id):
-    vehicle = get_object_or_404(models.Vehicle, id=id)
-    if request.method == 'POST':
-        form_vehicle = forms.VehicleForm(request.POST, instance=vehicle)
-        if form_vehicle.is_valid():
-            f_vehicle = form_vehicle.save(commit=False)
-            f_vehicle.save()
-            return redirect('detail_vehicle', id=f_vehicle.id)
-    else:
-        form_vehicle = forms.VehicleForm(instance=vehicle)
-    return render(request,'estacionamento/vehicle/edit_vehicle.html', {'form':form_vehicle})
+class UpdateVehicle(UpdateView):
+    model = models.Vehicle
+    template_name = 'estacionamento/vehicle/edit_vehicle.html'
+    fields = ['board','color','note','brand','owner']
+    context_object_name = 'update'
+    success_url = '/veiculos/{id}/'
 
-class delete_vehicle(DeleteView):
+class DeleteVehicle(DeleteView):
     template_name = "estacionamento/vehicle/delete_vehicle.html"
     model = models.Vehicle
     context_object_name = 'vehicle'
@@ -190,42 +175,30 @@ class delete_vehicle(DeleteView):
 ########### END-VEHICLE ####################
 
 ########### MONTHLY ####################
-@login_required
-def list_monthly(request):
-    monthly = models.Monthly.objects.all().order_by('id')
-    return render(request, 'estacionamento/monthly/list_monthly.html', {'monthly':monthly})
+class ListMonthly(ListView):
+    model = models.Monthly
+    template_name = 'estacionamento/monthly/list_monthly.html'
+    context_object_name = 'monthly'
 
-@login_required
-def detail_monthly(request, id):
-    monthly = get_object_or_404(models.Monthly, id=id)
-    return render(request, 'estacionamento/monthly/detail_monthly.html', {'monthly':monthly})
+class DetailMonthly(DetailView):
+    model = models.Monthly
+    template_name = 'estacionamento/monthly/detail_monthly.html'
+    context_object_name = 'month'
 
-@login_required
-def new_monthly(request):
-    if request.method == 'POST':
-        form_monthly = forms.MonthlyForm(request.POST)
-        if form_monthly.is_valid():
-            monthly = form_monthly.save(commit=False)
-            monthly.save()
-            return redirect('detail_monthly', id=monthly.id)
-    else:
-        form_monthly = forms.MonthlyForm()
-    return render(request, 'estacionamento/monthly/edit_monthly.html', {'form':form_monthly})
+class CreateMonthly(CreateView):
+    model = models.Monthly
+    template_name = 'estacionamento/monthly/edit_monthly.html'
+    fields = ['input','output','paid','vehicle']
+    success_url = reverse_lazy('list_monthly')
 
-@login_required
-def update_monthly(request, id):
-    monthly = get_object_or_404(models.Monthly, id=id)
-    if request.method == 'POST':
-        form_monthly = forms.MonthlyForm(request.POST, instance=monthly)
-        if form_monthly.is_valid():
-            f_monthly = form_monthly.save(commit=False)
-            f_monthly.save()
-            return redirect('detail_monthly', id=f_monthly.id)
-    else:
-        form_monthly = forms.MonthlyForm(instance=monthly)
-    return render(request, 'estacionamento/monthly/edit_monthly.html', {'form':form_monthly})
+class UpdateMonthly(UpdateView):
+    model = models.Monthly
+    template_name = 'estacionamento/monthly/edit_monthly.html'
+    fields = ['input','output','paid','vehicle']
+    context_object_name = 'update'
+    success_url = reverse_lazy('list_monthly')
 
-class delete_monthly(DeleteView):
+class DeleteMonthly(DeleteView):
     template_name = 'estacionamento/monthly/delete_monthly.html'
     model = models.Monthly
     context_object_name = 'month'

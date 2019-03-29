@@ -5,5 +5,6 @@
   <p>{{rotary.paid}}</p>
   <p>{{rotary.vehicle}}</p>
   <p>{{rotary.total_hour}}</p>
+  <a href="{% url 'update_rotary' rotary.id %}" class="btn btn-success">Atualizar</a>
   <a href="{% url 'delete_rotary' rotary.id %}" class="btn btn-danger">Deletar</a>
 {% endblock %}
