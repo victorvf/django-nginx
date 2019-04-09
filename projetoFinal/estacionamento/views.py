@@ -1,5 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.utils import timezone
+from . import models
+from . import forms
 
 ############## CLASS-BASED ##################
 
@@ -8,11 +12,6 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
 ############### END CLASS-BASED ################
-
-from django.urls import reverse_lazy
-from django.utils import timezone
-from . import models
-from . import forms
 
 ########### PDF #################
 from django.http import HttpResponse
@@ -143,28 +142,40 @@ class DeleteRotary(DeleteView):
 ########### END-ROTARY ####################
 
 ########### VEHICLE ####################
-class ListVehicle(ListView):
-    model = models.Vehicle
-    template_name = 'estacionamento/vehicle/list_vehicle.html'
-    context_object_name = 'vehicles'
+@login_required
+def list_vehicle(request):
+    vehicles = models.Vehicle.objects.all().order_by('id')
+    return render(request, 'estacionamento/vehicle/list_vehicle.html', {'vehicles':vehicles})
 
-class DetailVehicle(DetailView):
-    model = models.Vehicle
-    template_name = 'estacionamento/vehicle/detail_vehicle.html'
-    context_object_name = 'vehicle'
+@login_required
+def detail_vehicle(request, id):
+    vehicle = get_object_or_404(models.Vehicle, id=id)
+    return render(request,'estacionamento/vehicle/detail_vehicle.html', {'vehicle':vehicle})
 
-class CreateVehicle(CreateView):
-    model = models.Vehicle
-    template_name = 'estacionamento/vehicle/edit_vehicle.html'
-    fields = ['board','color','note','brand','owner']
-    success_url = '/veiculos/'
+@login_required
+def create_vehicle(request):
+    if request.method == 'POST':
+        form_vehicle = forms.VehicleForm(request.POST)
+        if form_vehicle.is_valid():
+            vehicle = form_vehicle.save(commit=False)
+            vehicle.save()
+            return redirect('detail_vehicle', id=vehicle.id)
+    else:
+        form_vehicle = forms.VehicleForm()
+    return render(request, 'estacionamento/vehicle/edit_vehicle.html', {'form':form_vehicle})
 
-class UpdateVehicle(UpdateView):
-    model = models.Vehicle
-    template_name = 'estacionamento/vehicle/edit_vehicle.html'
-    fields = ['board','color','note','brand','owner']
-    context_object_name = 'update'
-    success_url = '/veiculos/{id}/'
+@login_required
+def update_vehicle(request, id):
+    vehicle = get_object_or_404(models.Vehicle, id=id)
+    if request.method == 'POST':
+        form_vehicle = forms.VehicleForm(request.POST, instance=vehicle)
+        if form_vehicle.is_valid():
+            vehicle_save = form_vehicle.save(commit=False)
+            vehicle_save.save()
+            return redirect('detail_vehicle',id=vehicle_save.id)
+    else:
+        form_vehicle = forms.VehicleForm(instance=vehicle)
+    return render(request, 'estacionamento/vehicle/edit_vehicle.html', {'form':form_vehicle})
 
 class DeleteVehicle(DeleteView):
     template_name = "estacionamento/vehicle/delete_vehicle.html"

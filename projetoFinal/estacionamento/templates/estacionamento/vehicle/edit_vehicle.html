@@ -7,11 +7,7 @@
       <form method="POST">
         {% csrf_token %}
         {{ form|bootstrap }}
-        {% if update %}
-          <button type="submit" value="Update" class="btn btn-primary">Salvar</button>
-        {% else %}
-          <button type="submit" value="Save" class="btn btn-primary">Salvar</button>
-        {% endif %}
+        <button type="submit" class="btn btn-primary">Salvar</button>
       </form>
     </div>
   </div>

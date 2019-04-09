@@ -27,10 +27,10 @@ urlpatterns = [
 
     ############# VEHICLE ##############
 
-    path('veiculos/', views.ListVehicle.as_view(), name='list_vehicle'),
-    path('veiculos/new/', views.CreateVehicle.as_view(), name='new_vehicle'),
-    path('veiculos/<pk>/', views.DetailVehicle.as_view(), name='detail_vehicle'),
-    path('veiculos/<pk>/edit/', views.UpdateVehicle.as_view(), name='update_vehicle'),
+    path('veiculos/', views.list_vehicle, name='list_vehicle'),
+    path('veiculos/new/', views.create_vehicle, name='create_vehicle'),
+    path('veiculos/<int:id>/', views.detail_vehicle, name='detail_vehicle'),
+    path('veiculos/<int:id>/edit/', views.update_vehicle, name='update_vehicle'),
     path('veiculos/<pk>/delete/', views.DeleteVehicle.as_view(), name='delete_vehicle'),
 
     ############# END-VEHICLE ##############
