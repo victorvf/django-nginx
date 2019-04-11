@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.utils import timezone
 from . import models
@@ -110,30 +111,30 @@ def delete_people(request, id):
 
 ########### ROTARY ####################
 
-class ListRotary(ListView):
+class ListRotary(LoginRequiredMixin, ListView):
     model = models.Rotary
     template_name = 'estacionamento/rotary/list_rotary.html'
     context_object_name = 'rotaries'
 
-class DetailRotary(DetailView):
+class DetailRotary(LoginRequiredMixin, DetailView):
     model = models.Rotary
     template_name = 'estacionamento/rotary/detail_rotary.html'
     context_object_name = 'rotary'
 
-class CreateRotary(CreateView):
+class CreateRotary(LoginRequiredMixin, CreateView):
     model = models.Rotary
     template_name = 'estacionamento/rotary/edit_rotary.html'
     fields = ['input','output','paid','vehicle']
     success_url = '/rotativos/'
 
-class UpdateRotary(UpdateView):
+class UpdateRotary(LoginRequiredMixin, UpdateView):
     model = models.Rotary
     template_name = 'estacionamento/rotary/edit_rotary.html'
     fields = ['input','output','paid','vehicle']
     context_object_name = 'update'
     success_url = '/rotativos/{id}/'
 
-class DeleteRotary(DeleteView):
+class DeleteRotary(LoginRequiredMixin, DeleteView):
     template_name = 'estacionamento/rotary/delete_rotary.html'
     model = models.Rotary
     context_object_name = 'rotary'
@@ -177,7 +178,7 @@ def update_vehicle(request, id):
         form_vehicle = forms.VehicleForm(instance=vehicle)
     return render(request, 'estacionamento/vehicle/edit_vehicle.html', {'form':form_vehicle})
 
-class DeleteVehicle(DeleteView):
+class DeleteVehicle(LoginRequiredMixin, DeleteView):
     template_name = "estacionamento/vehicle/delete_vehicle.html"
     model = models.Vehicle
     context_object_name = 'vehicle'
@@ -186,30 +187,30 @@ class DeleteVehicle(DeleteView):
 ########### END-VEHICLE ####################
 
 ########### MONTHLY ####################
-class ListMonthly(ListView):
+class ListMonthly(LoginRequiredMixin, ListView):
     model = models.Monthly
     template_name = 'estacionamento/monthly/list_monthly.html'
     context_object_name = 'monthly'
 
-class DetailMonthly(DetailView):
+class DetailMonthly(LoginRequiredMixin, DetailView):
     model = models.Monthly
     template_name = 'estacionamento/monthly/detail_monthly.html'
     context_object_name = 'month'
 
-class CreateMonthly(CreateView):
+class CreateMonthly(LoginRequiredMixin, CreateView):
     model = models.Monthly
     template_name = 'estacionamento/monthly/edit_monthly.html'
     fields = ['input','output','paid','vehicle']
     success_url = reverse_lazy('list_monthly')
 
-class UpdateMonthly(UpdateView):
+class UpdateMonthly(LoginRequiredMixin, UpdateView):
     model = models.Monthly
     template_name = 'estacionamento/monthly/edit_monthly.html'
     fields = ['input','output','paid','vehicle']
     context_object_name = 'update'
     success_url = reverse_lazy('list_monthly')
 
-class DeleteMonthly(DeleteView):
+class DeleteMonthly(LoginRequiredMixin, DeleteView):
     template_name = 'estacionamento/monthly/delete_monthly.html'
     model = models.Monthly
     context_object_name = 'month'

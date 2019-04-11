@@ -56,7 +56,7 @@ class Rotary(models.Model):
 
     def total_hour(self):
         #import math -- math.ceil() ela arredonda qualquer valor pra mais, tipo 0.1 vai pra 1
-        return calcular_hora(self)
+        return calculo_hora(self)
 
     def __str__(self):
         return self.vehicle.board
