@@ -59,8 +59,7 @@ class Pdf(View):
 
 @login_required #login_required não precisa ser colocado pra quem utilizar o as_view() na urls.py
 def home(request):
-    context = {'mensagem':'Olaa mundo'}
-    return render(request, 'estacionamento/index.html', {'context':context})
+    return render(request, 'estacionamento/index.html')
 
 ########### PEOPLE #################
 @login_required

@@ -47,6 +47,8 @@
     </nav>
     <section style="margin-top:90px">
       <div class="container">
+        <h4>{{ user.username }}</h4>
+          <a href="{% url 'password_change' %}">Alterar Senha</a>
         {% block main %}
         {% endblock %}
       </div>

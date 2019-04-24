@@ -15,12 +15,12 @@
   <tbody class="text-uppercase">
     {% for month in monthly %}
       <tr>
-        <th scope="row"><a href="{% url 'detail_monthly' monthly.id %}">{{monthly.id}}</a></th>
-        <td>{{monthly.input}}</td>
-        <td>{{monthly.output}}</td>
-        <td>{{monthly.result_paid}}</td>
-        <td>{{monthly.vehicle}}</td>
-        <td>{{monthly.total_month}}</td>
+        <th scope="row"><a href="{% url 'detail_monthly' month.id %}">{{month.id}}</a></th>
+        <td>{{month.input}}</td>
+        <td>{{month.output}}</td>
+        <td>{{month.result_paid}}</td>
+        <td>{{month.vehicle}}</td>
+        <td>{{month.total_month}}</td>
       </tr>
     {% endfor %}
   </tbody>

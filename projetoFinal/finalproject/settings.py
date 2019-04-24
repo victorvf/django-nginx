@@ -121,3 +121,11 @@ STATIC_URL = '/static/'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'estacionamento_home'
 LOGOUT_REDIRECT_URL = 'login'
+
+
+#email
+# EMAIL_HOST =
+# EMAIL_PORT =
+# EMAIL_HOST_USER =
+# EMAIL_HOST_PASSWORD =
+# EMAIL_USE_TLS =
